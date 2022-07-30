@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./react.development.js"></script>
+    <script src="./react-dom.development.js"></script>
+    <style>
+        .container {
+            background: black;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const rootElement = document.getElementById('root')
+        const root = ReactDOM.createRoot(rootElement)
+        const ele = React.createElement('div', {
+            children: 'hello',
+            className: 'container',
+        })
+        root.render(ele)
+    </script>
+</body>
+</html>
