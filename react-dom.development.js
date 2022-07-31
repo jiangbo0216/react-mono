@@ -4313,6 +4313,7 @@
     }
   }
 
+  //# inject react internal
   var ReactInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
   var _ReactInternals$Sched = ReactInternals.Scheduler,
       unstable_cancelCallback = _ReactInternals$Sched.unstable_cancelCallback,
@@ -7754,6 +7755,7 @@
     }
 
     var eventName = 'on' + eventNameSuffix;
+    //# 'onclick' in document => true
     var isSupported = (eventName in document);
 
     if (!isSupported) {
@@ -9751,6 +9753,7 @@
     }
   }
 
+  //# real create ele
   function createElement(type, props, rootContainerElement, parentNamespace) {
     var isCustomComponentTag; // We create tags in the namespace of their parent container, except HTML
     // tags get no namespace.
@@ -10932,6 +10935,7 @@
     eventsEnabled = null;
     selectionInformation = null;
   }
+  //# call real creation of ele
   function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
     var parentNamespace;
 
@@ -21528,6 +21532,7 @@
     return bailoutOnAlreadyFinishedWork(current, workInProgress, renderLanes);
   }
 
+  //# real begin work
   function beginWork(current, workInProgress, renderLanes) {
     {
       if (workInProgress._debugNeedsRemount && current !== null) {
@@ -22076,6 +22081,7 @@
     }
   }
 
+  //# do dom creation work
   function completeWork(current, workInProgress, renderLanes) {
     var newProps = workInProgress.pendingProps; // Note: This intentionally doesn't check if we're hydrating because comparing
     // to the current tree provider fiber is just as fast and less error-prone.
@@ -25486,6 +25492,7 @@
     return claimNextRetryLane();
   }
 
+  //# schedule update on fiber, [updateContainer]
   function scheduleUpdateOnFiber(root, fiber, lane, eventTime) {
     checkForNestedUpdates();
 
@@ -25585,6 +25592,7 @@
   // root has work on. This function is called on every update, and right before
   // exiting a task.
 
+  //# scheduled fibers unit with currentTime
   function ensureRootIsScheduled(root, currentTime) {
     var existingCallbackNode = root.callbackNode; // Check if any lanes are being starved by other work. If so, mark them as
     // expired so we know to work on those next.
@@ -25704,6 +25712,7 @@
   // goes through Scheduler.
 
 
+  //# recursive do fibers unit from root 
   function performConcurrentWorkOnRoot(root, didTimeout) {
     {
       resetNestedUpdateFlag();
@@ -26232,6 +26241,7 @@
     pop(subtreeRenderLanesCursor, fiber);
   }
 
+  // prepare workInProgress fiber tree, [renderRootSync]
   function prepareFreshStack(root, lanes) {
     root.finishedWork = null;
     root.finishedLanes = NoLanes;
@@ -26412,6 +26422,7 @@
     return workInProgressRootExitStatus === RootInProgress;
   }
 
+  // sync render form root
   function renderRootSync(root, lanes) {
     var prevExecutionContext = executionContext;
     executionContext |= RenderContext;
@@ -26437,6 +26448,7 @@
       }
 
       workInProgressTransitions = getTransitionsForLanes();
+      //# prepare workInProgress
       prepareFreshStack(root, lanes);
     }
 
@@ -26475,13 +26487,16 @@
   /** @noinline */
 
 
+  //# sync fibers unit
   function workLoopSync() {
     // Already timed out, so perform work without checking if we need to yield.
     while (workInProgress !== null) {
+      //# from workInProgress traverse fiber tree
       performUnitOfWork(workInProgress);
     }
   }
 
+  //# concurrent fibers unit work (render)
   function renderRootConcurrent(root, lanes) {
     var prevExecutionContext = executionContext;
     executionContext |= RenderContext;
@@ -26552,6 +26567,7 @@
   /** @noinline */
 
 
+  //# concurrent fibers unit, call from renderRootConcurrent
   function workLoopConcurrent() {
     // Perform work until Scheduler asks us to yield
     while (workInProgress !== null && !shouldYield()) {
@@ -26559,6 +26575,7 @@
     }
   }
 
+  // do fibers unit work
   function performUnitOfWork(unitOfWork) {
     // The current, flushed, state of this fiber is the alternate. Ideally
     // nothing should rely on this, but relying on it here means that we don't
@@ -26588,6 +26605,7 @@
     ReactCurrentOwner$2.current = null;
   }
 
+  //# do fibers work
   function completeUnitOfWork(unitOfWork) {
     // Attempt to complete the current unit of work, then move to the next
     // sibling. If there are no more siblings, return to the parent fiber.
@@ -27429,6 +27447,7 @@
   {
     var dummyFiber = null;
 
+    //# is this commit
     beginWork$1 = function (current, unitOfWork, lanes) {
       // If a component throws an error, we replay it again in a synchronously
       // dispatched event, so that the debugger will treat it as an uncaught
@@ -27539,6 +27558,7 @@
   }
   var fakeActCallbackNode = {};
 
+  //# schedule fibers unit
   function scheduleCallback$1(priorityLevel, callback) {
     {
       // If we're currently inside an `act` scope, bypass Scheduler and push to
@@ -28125,6 +28145,7 @@
   //    compatible.
 
 
+  //# create fiber
   var createFiber = function (tag, pendingProps, key, mode) {
     // $FlowFixMe: the shapes are exact here but Flow doesn't like constructors
     return new FiberNode(tag, pendingProps, key, mode);
@@ -28612,6 +28633,7 @@
     return target;
   }
 
+  //# fiber root node (is plain object)
   function FiberRootNode(containerInfo, tag, hydrate, identifierPrefix, onRecoverableError) {
     this.tag = tag;
     this.containerInfo = containerInfo;
@@ -28669,6 +28691,7 @@
     }
   }
 
+  //# root
   function createFiberRoot(containerInfo, tag, hydrate, initialChildren, hydrationCallbacks, isStrictMode, concurrentUpdatesByDefaultOverride, // TODO: We have several of these arguments that are conceptually part of the
   // host config, but because they are passed in at runtime, we have to thread
   // them through the root constructor. Perhaps we should put them all into a
@@ -29296,6 +29319,7 @@
     console['error'](error);
   };
 
+  // container of FiberRootNode instance
   function ReactDOMRoot(internalRoot) {
     this._internalRoot = internalRoot;
   }
@@ -29359,6 +29383,7 @@
     }
   };
 
+  //# create root fiber
   function createRoot(container, options) {
     if (!isValidContainer(container)) {
       throw new Error('createRoot(...): Target container is not a DOM element.');
