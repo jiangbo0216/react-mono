@@ -1,0 +1,1 @@
+对于 react 组件库来说，只有 dev 环境需要 react，所以 react @types/react 安装在全局 
